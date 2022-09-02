@@ -1,13 +1,9 @@
 class CreateNews < ActiveRecord::Migration[7.0]
   def change
-    create_table :news do |t|
-      t.string :title
-      t.string :content
-      t.integer :authorId
-      t.string :image
-      t.string :tag
-
-      t.timestamps
+    create_table :jwt_denylist do |t|
+      t.string :jti, null: false
+      t.datetime :exp, null: false
     end
+    add_index :jwt_denylist, :jti
   end
 end
