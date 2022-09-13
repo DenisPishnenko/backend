@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   resources :users
 
   get '/member-data', to: 'members#show'
-  # root "news#index"
+  root "news#index"
 end
