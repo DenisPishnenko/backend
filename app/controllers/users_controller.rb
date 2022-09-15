@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     if @user.nil?
-      render json: { message: 'User not found' }, status: :unprocessable_entity
+      render json: { message: 'User not found' }, status: :not_found
     else
       render json: @user.to_json(include: :news)
     end  
