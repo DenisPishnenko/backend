@@ -4,7 +4,7 @@ class NewsController < ApplicationController
   def index
     @news = News.all
 
-    render json: @news
+    render json: @news.to_json(include: :user)
   end
 
   # POST /news
