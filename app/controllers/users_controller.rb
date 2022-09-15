@@ -1,22 +1,30 @@
 class UsersController < ApplicationController
+  before_action :set_user
   respond_to :json
 
   def show
-    @user = User.find(params[:id])
-    render json: @user.to_json(include: :news)
+    if @user.nil?
+      render json: { message: 'User not found' }
+    else
+      render json: @user.to_json(include: :news)
+    end  
   end
 
   def update
-    @user = User.find(params[:id])
 
     if @user.update(user_params)
       render json: @user, status: :ok
     else 
-      render json: { message: 'Something went wrong.' }
+      render json: @user.errors, status: :unprocessable_entity
     end   
   end
 
   private
+     
+    def set_user
+      @user = User.find_by(id: params[:id])
+    end  
+      
     def user_params
       params.require(:user).permit(:name)
     end  
