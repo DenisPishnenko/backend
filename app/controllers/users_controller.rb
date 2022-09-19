@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
-  # :authenticate_user!, only: %i[ update ]
+  before_action :authenticate_user!, only: %i[ update ]
                 
   respond_to :json
 
@@ -28,6 +28,6 @@ class UsersController < ApplicationController
     end  
       
     def user_params
-      params.require(:user).permit(:name, :image)
+      params.permit(:name, :image)
     end  
 end
