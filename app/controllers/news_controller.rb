@@ -1,16 +1,15 @@
 class NewsController < ApplicationController
+  before_action :authenticate_user!, except: :index
+  before_action :get_user, except: :index
 
-  # GET /news
   def index
     @news = News.all
 
     render json: @news.to_json(include: :user)
   end
 
-  # POST /news
   def create
-    @news = News.new(news_params)
-
+    @news = @user.news.build(news_params)
     if @news.save
       render json: @news, status: :created, location: @news
     else
@@ -19,8 +18,10 @@ class NewsController < ApplicationController
   end
 
   private
-    # Only allow a list of trusted parameters through.
+    def get_user
+      @user = User.find(params[:user_id])
+    end  
     def news_params
-      params.require(:news).permit(:title, :content, :authorId, :image, :tag)
+      params.permit(:title, :content, :user_id, :image, :tag)
     end
 end
