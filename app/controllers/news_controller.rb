@@ -14,12 +14,15 @@ class NewsController < ApplicationController
       render json: @news, status: :created, location: @news
     else
       render json: @news.errors, status: :unprocessable_entity
-    end
+    end  
   end
 
   private
     def get_user
-      @user = User.find(params[:user_id])
+      @user = User.find_by(id: params[:user_id])
+      if @user.nil?
+        render json: { message: 'User not found' }, status: :not_found
+      end
     end  
     def news_params
       params.permit(:title, :content, :user_id, :image, :tag)
