@@ -3,9 +3,11 @@ Rails.application.routes.draw do
               controllers: {
                 sessions: 'users/sessions',
                 registrations: 'users/registrations'
-              }  
-  resources :news
-  resources :users
+              }             
+  resources :users, only: [:show, :update] do
+    resource :news, only: :create
+  end 
+  resources :news, only: :index  
 
   get '/member-data', to: 'members#show'
   root "news#index"
