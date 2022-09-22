@@ -4,10 +4,10 @@ Rails.application.routes.draw do
                 sessions: 'users/sessions',
                 registrations: 'users/registrations'
               }             
-  resources :users do
-    resources :news, only: :create
+  resources :users, only: [:show, :update] do
+    resource :news, only: :create
   end 
-  resources :news  
+  resources :news, only: :index  
 
   get '/member-data', to: 'members#show'
   root "news#index"
