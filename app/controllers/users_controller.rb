@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
-  before_action :authenticate_user!, only: %i[ update show ]
+  before_action :authenticate_user!, only: %i[ update ]
                 
   respond_to :json
 
